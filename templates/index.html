@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+<body>
+    <video autoplay muted loop playsinline id="background-video">
+        <source id="video-source" src="{{ url_for('static', filename='videos/clear.mp4') }}" type="video/mp4">
+    </video>
+
+
+
+    <div class="container">
+        <!-- Header row with title and form -->
+        <div class="header-row">
+            <h1 class="app-title">My Weather App</h1>
+            <div class="search-wrapper">
+                <form method="POST" class="search-form">
+                    <div class = "input-wrapper">
+                        <input type="text" name="city" class="location-input" placeholder="Enter location (e.g., London)" value="{{ city }}">
+                        <button type="submit" class="search-button">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+                <div type = "submit"class = "location-detection-button">
+                     <span class="material-symbols-outlined">my_location</span>
+                </div>
+        </div>
+        
+        {% if error %}
+            <div class="alert alert-danger text-center">{{ error }}</div>
+        {% endif %}
+        
+        {% if weather %}
+            <div class="card weather-card">
+                <div class="card-body">
+                    <div class="location-date-wrapper">
+                        <div class="location">
+                            <span class="material-symbols-outlined">location_on</span>
+                            <p class="location-name">{{ weather.city }}</p>
+                    </div>
+                    <p class="date">{{ weather.local_date_formatted }}</p>
+                </div>
+            <div class="weather-icon">
+                {% if weather.weather_main == "Clear" %}
+                    <img src="{{ url_for('static', filename='weather-icon/clear.svg') }}" alt="Clear" class="weather-img">
+                {% elif weather.weather_main == "Clouds" %}
+                    {% if weather.is_daytime %}
+                        <img src="{{ url_for('static', filename='weather-icon/cloudy-day-1.svg') }}" alt="Cloudy Day" class="weather-img">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='weather-icon/cloudy-night-1.svg') }}" alt="Cloudy Night" class="weather-img">
+                    {% endif %}
+
+                {% elif weather.weather_main == "Rain" %}
+                    <img src="{{ url_for('static', filename='weather-icon/rainy.svg') }}" alt="Rain" class="weather-img">
+                {% elif weather.weather_main == "Drizzle" %}
+                    <img src="{{ url_for('static', filename='weather-icon/drizzle.svg') }}" alt="Drizzle" class="weather-img">
+                {% elif weather.weather_main == "Snow" %}
+                    <img src="{{ url_for('static', filename='weather-icon/snow.svg') }}" alt="Snow" class="weather-img">
+                {% elif weather.weather_main == "Thunderstorm" %}
+                    <img src="{{ url_for('static', filename='weather-icon/thunderstorm.svg') }}" alt="Thunderstorm" class="weather-img">
+                {% else %}
+                    <img src="{{ url_for('static', filename='weather-icon/clear.svg') }}" alt="Default" class="weather-img">
+                {% endif %}
+            </div>
+
+                    
+
+                    {% if forecast and forecast | length > 0%}
+                        <p><strong>
+                            <span class="material-symbols-outlined">
+                            arrow_downward
+                            </span>
+                            {{forecast[0].min_temp}}°C |
+                            <span class="material-symbols-outlined">
+                            arrow_upward
+                            </span>
+                            {{forecast[0].max_temp}}°C
+                        </strong></p>
+                    {%endif %}
+
+
+                    <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+                    <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+                    <p><strong>Wind Speed:</strong> {{ weather.wind_speed }} km/h</p>
+                    <p><strong>Description:</strong> {{ weather.description }} </p>
+                    <p><strong>Sunrise:</strong> {{weather.sunrise}}</p>
+                    <p><strong>Sunset:</strong> {{weather.sunset}}</p>
+                    <p>Last Update: {{weather.last_update}}</p>
+
+                </div>
+            </div>
+        {% endif %}
+
+        {% if forecast %}
+            <div class="forecast-container">
+                {% for day in forecast[1:] %}
+                    <div class="card forecast-card" data-weather="{{ day.weather_main }}">
+                        <div class="card-body">
+                            <h5>{{ day.date_formatted }}</p>
+
+                                         <div class="forecast-weather-icon">
+                                        {% if day.weather_main == "Clear" %}
+                                            <img src="{{ url_for('static', filename='weather-icon/clear.svg') }}" alt="Clear" class="weather-img">
+                                        {% elif day.weather_main == "Clouds" %}
+                                            <img src="{{ url_for('static', filename='weather-icon/cloudy-day-1.svg') }}" alt="Clouds" class="weather-img">
+                                        {% elif day.weather_main == "Rain" %}
+                                            <img src="{{ url_for('static', filename='weather-icon/rainy.svg') }}" alt="Rain" class="weather-img">
+                                        {% elif day.weather_main == "Drizzle" %}
+                                            <img src="{{ url_for('static', filename='weather-icon/drizzle.svg') }}" alt="Drizzle" class="weather-img">
+                                        {% elif day.weather_main == "Snow" %}
+                                            <img src="{{ url_for('static', filename='weather-icon/snow.svg') }}" alt="Snow" class="weather-img">
+                                        {% elif day.weather_main == "Thunderstorm" %}
+                                            <img src="{{ url_for('static', filename='weather-icon/thunderstorm.svg') }}" alt="Thunderstorm" class="weather-img">
+                                        {% else %}
+                                            <img src="{{ url_for('static', filename='weather-icon/clear.svg') }}" alt="Default" class="weather-img">
+                                        {% endif %}
+                                    </div>
+
+                            <p> {{ day.min_temp }}°C |  {{ day.max_temp }}°C</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+

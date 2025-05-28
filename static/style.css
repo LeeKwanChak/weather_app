@@ -1,0 +1,263 @@
+#background-video {
+    position : fixed;
+    top : 0;
+    left : 0;
+    width: 100vw;
+    height : 100vh;
+    object-fit: cover;
+    z-index : -1;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    
+    background-color: rgba(128, 128, 128, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+
+    
+}
+
+body {
+    padding-top: 100px; 
+}
+
+.header-row {
+    display: flex;
+    align-items: center; /* Vertically center the title and search wrapper */
+    justify-content: space-between; /* Space out the title and search wrapper */
+    margin-bottom: 20px; /* Space below the header row */
+}
+
+/* Title styling */
+.app-title {
+    font-size: 24px;
+    margin: 0; /* Remove default margins */
+    flex: 0 0 auto; /* Prevent title from stretching */
+}
+
+/* Search wrapper styling */
+.search-wrapper {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    margin-left: 80px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.location-input{
+    width: 100%;
+    padding: 10px 40px 10px 16px;;
+    border-radius: 99px;
+    border: 3px solid transparent;
+    background: rgb(0,0,0,0.15);
+    outline: none;
+    transition: 0.25s border;
+    font-size: 16px;
+    color: white;
+}
+
+
+
+.search-button{
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.search-button:hover{
+    color: #ffd700; 
+    transform: scale(1.1);
+    transition: 0.2s ease;
+}
+
+.location-detection-button{
+    display: flex;
+}
+
+.location-detection-button:hover{
+    transform: scale(1.1);
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+
+/* Weather icon styling */
+.weather-icon {
+    margin-bottom: 10px; /* Space before the next element */
+}
+
+.weather-img {
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    vertical-align: middle; /* Align with text */
+}
+
+
+
+.location-date-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+}
+
+.location-name {
+    margin: 0;
+    font-size: 18px; /* Slightly larger for emphasis, matching the image */
+    font-weight: bold; /* Make the city name bold like in the image */
+}
+
+.date {
+    margin: 0;
+    font-size: 16px; /* Match the font size in the image */
+    color: #fff; /* Ensure white text */
+    text-align: right;
+    font-weight: bold;
+}
+
+
+/* Card styling */
+.card {
+    background: rgba(128, 128, 128, 0.5);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin: 10px 0;
+}
+
+.weather-card {
+    padding: 15px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-body h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.card-body p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.card-body img {
+    width: 60px;
+    height: 60px;
+    margin: 10px 0;
+}
+
+/* Forecast cards */
+.forecast-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.forecast-card {
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.forecast-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
+}
+
+
+.forecast-card .card-body h5 {
+    font-size: 16px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.forecast-card .card-body p {
+    margin: 10px 0;
+}
+
+/* Error message styling */
+.alert-danger {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Title and heading styling */
+h2.mt-4 {
+    font-size: 24px;
+    margin-top: 40px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-row {
+        flex-direction: column; /* Stack title and form on smaller screens */
+        align-items: center;
+        gap: 15px; /* Space between title and form */
+    }
+
+    .search-form {
+        flex-direction: column; /* Stack input and button */
+        width: 100%; /* Full width for form */
+        gap: 15px;
+    }
+
+    .form-control {
+        width: 100%; /* Full width on mobile */
+        max-width: 300px; /* Limit maximum width */
+    }
+
+    .btn-primary {
+        width: 100%; /* Full width on mobile */
+        max-width: 300px; /* Match input width */
+    }
+
+    .app-title {
+        font-size: 20px; /* Slightly smaller title on mobile */
+    }
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.5s ease forwards;
+}
