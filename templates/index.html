@@ -21,14 +21,14 @@
             <div class="search-wrapper">
                 <form method="POST" class="search-form">
                     <div class = "input-wrapper">
-                        <input type="text" name="city" class="location-input" placeholder="Enter location (e.g., London)" value="{{ city }}">
+                        <input type="text" name="city" class="location-input" placeholder="Enter location (e.g., London)" {% if city %} value="{{ city }}" {% endif %}>
                         <button type="submit" class="search-button">
                             <span class="material-symbols-outlined">search</span>
                         </button>
                     </div>
                 </form>
             </div>
-                <div type = "submit"class = "location-detection-button">
+                <div id = "detect-location" class = "location-detection-button">
                      <span class="material-symbols-outlined">my_location</span>
                 </div>
         </div>

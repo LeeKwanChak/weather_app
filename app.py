@@ -17,11 +17,19 @@ def index():
             forecast_data, state_f = get_forecast_weather(city)
             print(weather_data)
             print(forecast_data)
-            print(state_c)
-            print(state_f)
+
+        elif 'lat' in request.form and 'lon' in request.form:
+            lat = request.form['lat']
+            lon = request.form['lon']
+            weather_data, state_c = get_current_weather(lat=lat, lon=lon)
+            forecast_data, state_f = get_forecast_weather(lat=lat, lon=lon)
+            weather_data['city'] = request.form['location']
+
             if state_c != 200 or state_f != 200:
                 error = f"Could not fetch weather data for {city}. Please check the loaction name."
             else:
+
+
                 # Map weather condition to video file
                 weather_main = weather_data['weather_main'].lower() if weather_data else 'default'
                 video_map = {
@@ -33,6 +41,7 @@ def index():
                     'clear': 'clear.mp4'
                 }
                 video_file = video_map.get(weather_main, 'default.mp4')
+
     return render_template('index.html', weather=weather_data, forecast=forecast_data, error=error, city=city, video_file=video_file)
 
 if __name__ == '__main__':

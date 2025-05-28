@@ -4,9 +4,14 @@ import os
 from datetime import datetime
 API_KEY = os.getenv('API_KEY')
 
-def get_current_weather(city):
+def get_current_weather(city= None, lat = None, lon = None):
 
-    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric'
+    if city:
+        url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric'
+    elif lat and lon:
+        url = f'http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}&units=metric'
+    else:
+        return None, 400  # Bad request if no input
 
     try:
         res = requests.get(url)
@@ -41,8 +46,15 @@ def get_current_weather(city):
         print(f"Error fetching current weather: {e}")
         return None, 'error'
 
-def get_forecast_weather(city):
-    forecast_url = f'http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={API_KEY}&units=metric'
+def get_forecast_weather(city= None, lat = None, lon = None):
+    if city:
+        forecast_url = f'http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={API_KEY}&units=metric'
+    elif lat and lon:
+        forecast_url = f'http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&units=metric'
+    else:
+        return None, 400  # Bad request if no input
+
+
     try:
         forecast_response = requests.get(forecast_url)
         forecast_data = forecast_response.json()
@@ -52,7 +64,6 @@ def get_forecast_weather(city):
             print(f"API Error (forecast): {forecast_data.get('message', 'Unknown error')}")
             return None, state
 
-        # 123
         forecast_list = []
         daily_data = {}
         three_hourly_data = []
