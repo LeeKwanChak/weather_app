@@ -6,8 +6,10 @@
     <title>Weather App</title>
     <link rel="stylesheet" href="{{url_for('static', filename = 'style.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
-<body>
+<body data-current-weather="{{ weather.weather_main if weather else 'Default' }}">
     <video autoplay muted loop playsinline id="background-video">
         <source id="video-source" src="{{ url_for('static', filename='videos/clear.mp4') }}" type="video/mp4">
     </video>
@@ -90,13 +92,23 @@
                     <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
                     <p><strong>Wind Speed:</strong> {{ weather.wind_speed }} km/h</p>
                     <p><strong>Description:</strong> {{ weather.description }} </p>
-                    <p><strong>Sunrise:</strong> {{weather.sunrise}}</p>
-                    <p><strong>Sunset:</strong> {{weather.sunset}}</p>
                     <p>Last Update: {{weather.last_update}}</p>
 
                 </div>
             </div>
         {% endif %}
+
+    <script>
+        const forecastData = {{ next_12_forecasts | tojson }};
+    </script>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3>Upcoming Weather</h3>
+            <canvas id="forecastChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
 
         {% if forecast %}
             <div class="forecast-container">
@@ -129,6 +141,7 @@
                 {% endfor %}
             </div>
         {% endif %}
+
         
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>

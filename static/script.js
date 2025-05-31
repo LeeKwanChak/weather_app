@@ -9,6 +9,18 @@ const weatherVideos = {
   Default: '/static/videos/clear.mp4'
 };
 
+const video = document.getElementById('background-video');
+const source = document.getElementById('video-source');
+
+// Set background video on initial load based on current weather
+const currentWeather = document.body.getAttribute('data-current-weather');
+const initialVideoSrc = weatherVideos[currentWeather] || weatherVideos.Default;
+if (source.getAttribute('src') !== initialVideoSrc) {
+  source.setAttribute('src', initialVideoSrc);
+  video.load();
+  video.play();
+}
+
 
 // change background video on forecast card
 document.addEventListener('DOMContentLoaded', () => {
@@ -84,3 +96,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof forecastData !== 'undefined') {
+    const labels = forecastData.map(entry => entry.time);
+    const temperatures = forecastData.map(entry => entry.temperature);
+
+    const ctx = document.getElementById('forecastChart').getContext('2d');
+
+  const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+  gradient.addColorStop(0, 'rgba(120, 180, 255, 0.4)');  // soft top blue
+  gradient.addColorStop(1, 'rgba(120, 180, 255, 0.05)'); // light fade at bottom
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: labels,
+  datasets: [{
+    label: 'Temperature (°C)',
+    data: temperatures,
+    fill: true,
+    tension: 0.4,
+    borderColor: 'rgba(120, 180, 255, 1)',          // soft blue line
+    backgroundColor: gradient,                      // blue gradient fill
+    pointBackgroundColor: 'white',
+    pointBorderColor: 'rgba(120, 180, 255, 1)',
+    pointRadius: 4
+  }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false
+      },
+      datalabels: {
+        color: '#ffffff',
+        align: 'top',
+        anchor: 'end',
+        font: {
+          size: 14,
+          weight: 'bold'
+        },
+        formatter: value => `${value}°`
+      }
+    },
+    scales: {
+      y: {
+        display: false,
+        min: Math.min(...temperatures) - 3,  // More buffer below
+        max: Math.max(...temperatures) + 3,
+        grid: {
+          display: false
+        }
+      },
+      x: {
+        grid: {
+          display: false
+        },
+        ticks: {
+          color: '#ffffff',
+          font: {
+            size: 14,
+            weight: '500'
+          }
+        }
+      }
+    }
+  },
+  plugins: [ChartDataLabels]  // Register the plugin
+});
+  }
+});

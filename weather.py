@@ -82,12 +82,10 @@ def get_forecast_weather(city= None, lat = None, lon = None):
             dt_txt = entry['dt_txt']  # e.g., "2025-05-27 15:00:00"
             entry_datetime = datetime.strptime(dt_txt, '%Y-%m-%d %H:%M:%S')
             three_hourly_data.append({
-                'datetime': dt_txt,
                 'time': entry_datetime.strftime('%H:%M'),
                 'date': entry_datetime.strftime('%Y-%m-%d'),
                 'temperature': round(entry['main']['temp'], 1),
                 'weather_main': entry['weather'][0]['main'],
-                'description': entry['weather'][0]['description'].capitalize()
             })
 
         for date_str in sorted(daily_data.keys()):
@@ -108,10 +106,12 @@ def get_forecast_weather(city= None, lat = None, lon = None):
                 'weather_main': weather_main
             })
 
-        return forecast_list, state
+        print(three_hourly_data)
+
+        return forecast_list, state, three_hourly_data
     except requests.RequestException as e:
         print(f"Error fetching forecast weather: {e}")
-        return None, 'error'
+        return None, 'error', None
 
 
 def get_coords_by_name(city):
