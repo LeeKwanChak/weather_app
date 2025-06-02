@@ -9,7 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
-<body data-current-weather="{{ weather.weather_main if weather else 'Default' }}">
+<body data-current-weather="{{ weather.weather_main if weather else 'Default' }}"
+    data-is-daytime="{{ 'true' if weather.is_daytime else 'false' }}">
+    
     <video autoplay muted loop playsinline id="background-video">
         <source id="video-source" src="{{ url_for('static', filename='videos/clear.mp4') }}" type="video/mp4">
     </video>
@@ -19,7 +21,7 @@
     <div class="container">
         <!-- Header row with title and form -->
         <div class="header-row">
-            <h1 class="app-title">My Weather App</h1>
+            <h1 class="app-title">Weather App</h1>
             <div class="search-wrapper">
                 <form method="POST" class="search-form">
                     <div class = "input-wrapper">
@@ -45,13 +47,19 @@
                     <div class="location-date-wrapper">
                         <div class="location">
                             <span class="material-symbols-outlined">location_on</span>
-                            <p class="location-name">{{ weather.city }}</p>
+                            <span class="location-name">{{ weather.city }}</span>
+                        </div>
+                        <span class="date">{{ weather.local_date_formatted }}</span>
+                        
                     </div>
-                    <p class="date">{{ weather.local_date_formatted }}</p>
-                </div>
             <div class="weather-icon">
                 {% if weather.weather_main == "Clear" %}
-                    <img src="{{ url_for('static', filename='weather-icon/clear.svg') }}" alt="Clear" class="weather-img">
+                    {% if weather.is_daytime %}
+                        <img src="{{ url_for('static', filename='weather-icon/day.svg') }}" alt="Clear" class="weather-img">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='weather-icon/night.svg') }}" alt="Clear" class="weather-img">
+                    {% endif %}
+                    
                 {% elif weather.weather_main == "Clouds" %}
                     {% if weather.is_daytime %}
                         <img src="{{ url_for('static', filename='weather-icon/cloudy-day-1.svg') }}" alt="Cloudy Day" class="weather-img">
@@ -91,23 +99,19 @@
                     <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
                     <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
                     <p><strong>Wind Speed:</strong> {{ weather.wind_speed }} km/h</p>
-                    <p><strong>Description:</strong> {{ weather.description }} </p>
-                    <p>Last Update: {{weather.last_update}}</p>
+                    <p class = "last-update">Last update: {{weather.last_update}}</p>
+                    
+
+                    <script>
+                        const forecastData = {{ next_12_forecasts | tojson }};
+                    </script>
+                    <canvas id="forecastChart" class="forecast-chart"> </canvas>
+
 
                 </div>
             </div>
         {% endif %}
 
-    <script>
-        const forecastData = {{ next_12_forecasts | tojson }};
-    </script>
-
-    <div class="card mt-4">
-        <div class="card-body">
-            <h3>Upcoming Weather</h3>
-            <canvas id="forecastChart" width="400" height="200"></canvas>
-        </div>
-    </div>
 
 
         {% if forecast %}
@@ -119,7 +123,7 @@
 
                                          <div class="forecast-weather-icon">
                                         {% if day.weather_main == "Clear" %}
-                                            <img src="{{ url_for('static', filename='weather-icon/clear.svg') }}" alt="Clear" class="weather-img">
+                                            <img src="{{ url_for('static', filename='weather-icon/day.svg') }}" alt="Clear" class="weather-img">
                                         {% elif day.weather_main == "Clouds" %}
                                             <img src="{{ url_for('static', filename='weather-icon/cloudy-day-1.svg') }}" alt="Clouds" class="weather-img">
                                         {% elif day.weather_main == "Rain" %}

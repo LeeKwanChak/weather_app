@@ -10,8 +10,7 @@ def get_current_weather(city= None, lat = None, lon = None):
         url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric'
     elif lat and lon:
         url = f'http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}&units=metric'
-    else:
-        return None, 400  # Bad request if no input
+
 
     try:
         res = requests.get(url)
@@ -34,8 +33,7 @@ def get_current_weather(city= None, lat = None, lon = None):
             'timezone': current_data['timezone'],
             'dt': current_data['dt'],
             'last_update': last_update,
-            'local_date': datetime.utcfromtimestamp(current_data['dt'] + current_data['timezone']).strftime('%Y-%m-%d'),
-            'local_date_formatted': datetime.utcfromtimestamp(current_data['dt'] + current_data['timezone']).strftime('%a, %b %d, %Y'),
+            'local_date_formatted': datetime.utcfromtimestamp(current_data['dt'] + current_data['timezone']).strftime('%a, %b %d'),
             'sunrise': datetime.utcfromtimestamp(current_data['sys']['sunrise'] + current_data['timezone']).strftime('%H:%M'),
             'sunset': datetime.utcfromtimestamp(current_data['sys']['sunset'] + current_data['timezone']).strftime('%H:%M'),
             'is_daytime': current_data['dt'] >= current_data['sys']['sunrise'] and current_data['dt'] < current_data['sys']['sunset']
@@ -51,8 +49,6 @@ def get_forecast_weather(city= None, lat = None, lon = None):
         forecast_url = f'http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={API_KEY}&units=metric'
     elif lat and lon:
         forecast_url = f'http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&units=metric'
-    else:
-        return None, 400  # Bad request if no input
 
 
     try:

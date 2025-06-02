@@ -8,6 +8,11 @@
     z-index : -1;
 }
 
+body {
+    padding-top: 20px; 
+}
+
+
 .container {
     max-width: 700px;
     margin: 0 auto;
@@ -22,22 +27,18 @@
     
 }
 
-body {
-    padding-top: 50px; 
-}
-
 .header-row {
     display: flex;
-    align-items: center; /* Vertically center the title and search wrapper */
-    justify-content: space-between; /* Space out the title and search wrapper */
-    margin-bottom: 20px; /* Space below the header row */
+    align-items: center;
+    justify-content: space-between; 
+    margin-bottom: 10px; 
 }
 
 /* Title styling */
 .app-title {
     font-size: 24px;
-    margin: 0; /* Remove default margins */
-    flex: 0 0 auto; /* Prevent title from stretching */
+    margin: 0; 
+    flex: 0 0 auto; 
 }
 
 /* Search wrapper styling */
@@ -97,45 +98,63 @@ body {
 }
 
 
-/* Weather icon styling */
-.weather-icon {
-    margin-bottom: 10px; /* Space before the next element */
-}
 
 .weather-img {
-    width: 40px; /* Adjust size as needed */
-    height: 40px; /* Adjust size as needed */
-    vertical-align: middle; /* Align with text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
 }
 
-
+.weather-icon .weather-img {
+    width: 80px !important; 
+    height: 80px !important;
+    object-fit: contain;
+}
 
 .location-date-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    flex-wrap: nowrap;
+    gap: 10px;
     margin-bottom: 10px;
 }
 
 .location {
     display: flex;
     align-items: center;
+    gap: 5px;
 }
 
 .location-name {
-    margin: 0;
-    font-size: 18px; /* Slightly larger for emphasis, matching the image */
-    font-weight: bold; /* Make the city name bold like in the image */
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    white-space: nowrap;
 }
 
 .date {
-    margin: 0;
-    font-size: 16px; /* Match the font size in the image */
-    color: #fff; /* Ensure white text */
-    text-align: right;
+    font-size: 16px;
     font-weight: bold;
+    color: white;
+    white-space: nowrap;
 }
+
+.last-update {
+    font-size: 1px;
+    color: #eee;
+    font-style: italic;
+}
+
+.forecast-chart {
+    width: 100% !important;
+    height: 300px !important;  
+    max-width: 100%;
+    display: block;
+}
+
 
 
 /* Card styling */
@@ -172,11 +191,8 @@ body {
 }
 
 
+
 .forecast-container {
-    /* display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px; */
     display: flex;
     gap: 1rem;
     overflow-x: auto;
@@ -203,6 +219,8 @@ body {
   background: rgba(255, 255, 255, 0.5);
 }
 
+
+
 .forecast-card {
     flex: 1;
     min-width: 150px;
@@ -217,6 +235,7 @@ body {
 
 
 .forecast-card .card-body h5 {
+    margin-top: 5px;
     font-size: 16px;
     font-size: 18px;
     margin-bottom: 10px;
@@ -240,36 +259,6 @@ h2.mt-4 {
     font-size: 24px;
     margin-top: 40px;
 }
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .header-row {
-        flex-direction: column; /* Stack title and form on smaller screens */
-        align-items: center;
-        gap: 15px; /* Space between title and form */
-    }
-
-    .search-form {
-        flex-direction: column; /* Stack input and button */
-        width: 100%; /* Full width for form */
-        gap: 15px;
-    }
-
-    .form-control {
-        width: 100%; /* Full width on mobile */
-        max-width: 300px; /* Limit maximum width */
-    }
-
-    .btn-primary {
-        width: 100%; /* Full width on mobile */
-        max-width: 300px; /* Match input width */
-    }
-
-    .app-title {
-        font-size: 20px; /* Slightly smaller title on mobile */
-    }
-}
-
 
 @keyframes fadeInUp {
     from {

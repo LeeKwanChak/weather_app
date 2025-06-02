@@ -1,6 +1,7 @@
 const weatherVideos = {
   Clear: '/static/videos/clear.mp4',
   Clouds: '/static/videos/clouds.mp4',
+  Night: '/static/videos/night.mp4',
   Rain: '/static/videos/rain.mp4',
   Thunderstorm: '/static/videos/thunderstorm.mp4',
   Snow: '/static/videos/snow.mp4',
@@ -14,7 +15,13 @@ const source = document.getElementById('video-source');
 
 // Set background video on initial load based on current weather
 const currentWeather = document.body.getAttribute('data-current-weather');
-const initialVideoSrc = weatherVideos[currentWeather] || weatherVideos.Default;
+const isDaytime = document.body.getAttribute('data-is-daytime') === 'true';
+
+let initialWeatherKey = currentWeather;
+if ((currentWeather === 'Clouds' || currentWeather === 'Clear') && !isDaytime) {
+  initialWeatherKey = 'Night';
+}
+const initialVideoSrc = weatherVideos[initialWeatherKey] || weatherVideos.Default;
 if (source.getAttribute('src') !== initialVideoSrc) {
   source.setAttribute('src', initialVideoSrc);
   video.load();
@@ -144,7 +151,7 @@ new Chart(ctx, {
     scales: {
       y: {
         display: false,
-        min: Math.min(...temperatures) - 3,  // More buffer below
+        min: Math.min(...temperatures) - 3, 
         max: Math.max(...temperatures) + 3,
         grid: {
           display: false
