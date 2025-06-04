@@ -10,6 +10,7 @@ const weatherVideos = {
   Default: '/static/videos/clear.mp4'
 };
 
+
 const video = document.getElementById('background-video');
 const source = document.getElementById('video-source');
 
@@ -108,12 +109,62 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof forecastData !== 'undefined') {
     const labels = forecastData.map(entry => entry.time);
     const temperatures = forecastData.map(entry => entry.temperature);
+    const weatherConditions = forecastData.map(entry => {
+      const condition = entry.weather_main.toLowerCase();
+      if (condition === 'clouds' && !isDaytime) {return 'cloudy-night';}
+      if (condition === 'clear' && !isDaytime) {return 'clear-night';}
+      return condition;
+    });
 
     const ctx = document.getElementById('forecastChart').getContext('2d');
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-  gradient.addColorStop(0, 'rgba(120, 180, 255, 0.4)');  // soft top blue
-  gradient.addColorStop(1, 'rgba(120, 180, 255, 0.05)'); // light fade at bottom
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(120, 180, 255, 0.4)');  // soft top blue
+    gradient.addColorStop(1, 'rgba(120, 180, 255, 0.05)'); // light fade at bottom
+
+
+    const iconMap = {
+      'clear': '/static/weather-icon/clear.svg',
+      'clear-night' : '/static/weather-icon/night.svg',
+      'clouds': '/static/weather-icon/cloudy-day-1.svg',
+      'cloudy-night' : '/static/weather-icon/cloudy-night-1.svg',
+      'rain': '/static/weather-icon/rainy.svg',
+      'drizzle': '/static/weather-icon/drizzle.svg',
+      'snow': '/static/weather-icon/snow.svg',
+      'thunderstorm': '/static/weather-icon/thunderstorm.svg',
+      'default': '/static/weather-icon/clear.svg'
+    };
+
+    const preloadedIcons = {};
+    Object.entries(iconMap).forEach(([key, src]) => {
+      const img = new Image();
+      img.src = src;
+      preloadedIcons[key] = img;
+    });
+
+
+    const weatherIconPlugin = {
+      id: 'weatherIconPlugin',
+      afterDraw: (chart) => {
+        const ctx = chart.ctx;
+        const dataset = chart.data.datasets[0];
+        const meta = chart.getDatasetMeta(0);
+
+        ctx.save();
+        meta.data.forEach((point, index) => {
+          const x = point.x;
+          const y = point.y;
+          const weather = weatherConditions[index];
+          const icon = preloadedIcons[weather] || preloadedIcons['default'];
+
+          if (icon.complete) {  
+            const size = 40;     
+            ctx.drawImage(icon, x - size / 2, y - size - 25, size, size);
+          }
+        });
+        ctx.restore();
+      }
+    };
 
 new Chart(ctx, {
   type: 'line',
@@ -124,12 +175,13 @@ new Chart(ctx, {
     data: temperatures,
     fill: true,
     tension: 0.4,
-    borderColor: 'rgba(120, 180, 255, 1)',          // soft blue line
-    backgroundColor: gradient,                      // blue gradient fill
+    borderColor: 'rgba(120, 180, 255, 1)',        
+    backgroundColor: gradient,                      
     pointBackgroundColor: 'white',
     pointBorderColor: 'rgba(120, 180, 255, 1)',
     pointRadius: 4
-  }]
+  }],
+    weatherConditions: weatherConditions
   },
   options: {
     responsive: true,
@@ -171,7 +223,7 @@ new Chart(ctx, {
       }
     }
   },
-  plugins: [ChartDataLabels]  // Register the plugin
+  plugins: [ChartDataLabels, weatherIconPlugin] 
 });
   }
 });

@@ -96,10 +96,10 @@
                     {%endif %}
 
 
-                    <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
-                    <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+                    <p><strong>Temperature:</strong>    {{ weather.temperature }}°C</p>
+                    <p><strong>Humidity:</strong>   {{ weather.humidity }}%</p>
                     <p><strong>Wind Speed:</strong> {{ weather.wind_speed }} km/h</p>
-                    <p class = "last-update">Last update: {{weather.last_update}}</p>
+                    <p class = "last-update">Last update:   {{weather.last_update}}</p>
                     
 
                     <script>
@@ -119,7 +119,7 @@
                 {% for day in forecast[1:] %}
                     <div class="card forecast-card" data-weather="{{ day.weather_main }}">
                         <div class="card-body">
-                            <h5>{{ day.date_formatted }}</p>
+                            <h5>{{ day.date_formatted }}</h5>
 
                                          <div class="forecast-weather-icon">
                                         {% if day.weather_main == "Clear" %}
