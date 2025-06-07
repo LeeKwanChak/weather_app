@@ -9,22 +9,25 @@
 }
 
 body {
-    padding-top: 20px; 
+    margin: 0; 
+    height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: auto; 
 }
-
 
 .container {
     max-width: 700px;
-    margin: 0 auto;
+    margin: 0 auto; 
     padding: 20px;
     font-family: Arial, sans-serif;
     color: #fff;
-    
     background-color: rgba(128, 128, 128, 0.5);
     border-radius: 20px;
     backdrop-filter: blur(20px);
-
-    
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 .header-row {

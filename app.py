@@ -43,6 +43,7 @@ def index():
                     'clear': 'clear.mp4'
                 }
                 video_file = video_map.get(weather_main, 'default.mp4')
+
     
     if three_hourly_data:
         next_12_forecasts = get_next_12_forecasts(three_hourly_data, weather_data)

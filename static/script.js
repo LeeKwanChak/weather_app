@@ -3,9 +3,9 @@ const weatherVideos = {
   Clouds: '/static/videos/clouds.mp4',
   Night: '/static/videos/night.mp4',
   Rain: '/static/videos/rain.mp4',
-  Thunderstorm: '/static/videos/thunderstorm.mp4',
+  Thunderstorm: '/static/videos/rain.mp4',
   Snow: '/static/videos/snow.mp4',
-  Drizzle: '/static/videos/drizzle.mp4',
+  Drizzle: '/static/videos/rain.mp4',
   Mist: '/static/videos/mist.mp4',
   Default: '/static/videos/clear.mp4'
 };
@@ -13,10 +13,11 @@ const weatherVideos = {
 
 const video = document.getElementById('background-video');
 const source = document.getElementById('video-source');
-
-// Set background video on initial load based on current weather
 const currentWeather = document.body.getAttribute('data-current-weather');
 const isDaytime = document.body.getAttribute('data-is-daytime') === 'true';
+const sunrise = parseInt(document.body.getAttribute('data-sunrise'));
+const sunset = parseInt(document.body.getAttribute('data-sunset'));
+const currentTime = Math.floor(Date.now() / 1000);
 
 let initialWeatherKey = currentWeather;
 if ((currentWeather === 'Clouds' || currentWeather === 'Clear') && !isDaytime) {
@@ -109,10 +110,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof forecastData !== 'undefined') {
     const labels = forecastData.map(entry => entry.time);
     const temperatures = forecastData.map(entry => entry.temperature);
+    
     const weatherConditions = forecastData.map(entry => {
       const condition = entry.weather_main.toLowerCase();
-      if (condition === 'clouds' && !isDaytime) {return 'cloudy-night';}
-      if (condition === 'clear' && !isDaytime) {return 'clear-night';}
+      const entryHour = parseInt(entry.time.split(':')[0], 10);
+      const isNightTime = entryHour < 6 || entryHour >= 18;      
+      if (condition === 'clouds' && isNightTime) {return 'cloudy-night';}
+      else if( condition === 'clear' && isNightTime) {return 'clear-night';}
       return condition;
     });
 
@@ -132,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       'drizzle': '/static/weather-icon/drizzle.svg',
       'snow': '/static/weather-icon/snow.svg',
       'thunderstorm': '/static/weather-icon/thunderstorm.svg',
+      'mist' : '/static/weather-icon/mist.svg',
       'default': '/static/weather-icon/clear.svg'
     };
 

@@ -34,8 +34,6 @@ def get_current_weather(city= None, lat = None, lon = None):
             'dt': current_data['dt'],
             'last_update': last_update,
             'local_date_formatted': datetime.utcfromtimestamp(current_data['dt'] + current_data['timezone']).strftime('%a, %b %d'),
-            'sunrise': datetime.utcfromtimestamp(current_data['sys']['sunrise'] + current_data['timezone']).strftime('%H:%M'),
-            'sunset': datetime.utcfromtimestamp(current_data['sys']['sunset'] + current_data['timezone']).strftime('%H:%M'),
             'is_daytime': current_data['dt'] >= current_data['sys']['sunrise'] and current_data['dt'] < current_data['sys']['sunset']
         }
 
@@ -63,27 +61,32 @@ def get_forecast_weather(city= None, lat = None, lon = None):
         forecast_list = []
         daily_data = {}
         three_hourly_data = []
-        for entry in forecast_data['list']:
-            entry_datetime = datetime.strptime(entry['dt_txt'], '%Y-%m-%d %H:%M:%S')
+        day = 0
+
+        for data in forecast_data['list']:
+            #Group data by date in daily_data
+            entry_datetime = datetime.strptime(data['dt_txt'], '%Y-%m-%d %H:%M:%S')
             entry_date = entry_datetime.date()
             entry_time = entry_datetime.time()
 
             date_str = entry_date.strftime('%Y-%m-%d')
             if date_str not in daily_data:
                 daily_data[date_str] = {'temps': [], 'entries': []}
-            daily_data[date_str]['temps'].append(entry['main']['temp'])
-            daily_data[date_str]['entries'].append({'time': entry_time, 'weather_main': entry['weather'][0]['main']})
+            daily_data[date_str]['temps'].append(data['main']['temp'])
+            daily_data[date_str]['entries'].append({'time': entry_time, 'weather_main': data['weather'][0]['main']})
             
 
-            dt_txt = entry['dt_txt']  # e.g., "2025-05-27 15:00:00"
+            # Add three hourly forecast data into three_hourly_data
+            dt_txt = data['dt_txt']  # e.g., "2025-05-27 15:00:00"
             entry_datetime = datetime.strptime(dt_txt, '%Y-%m-%d %H:%M:%S')
             three_hourly_data.append({
                 'time': entry_datetime.strftime('%H:%M'),
                 'date': entry_datetime.strftime('%Y-%m-%d'),
-                'temperature': round(entry['main']['temp'], 1),
-                'weather_main': entry['weather'][0]['main'],
+                'temperature': round(data['main']['temp'], 1),
+                'weather_main': data['weather'][0]['main'],
             })
 
+        # Get next five day forecast data
         for date_str in sorted(daily_data.keys()):
             temps = daily_data[date_str]['temps']
             entries = daily_data[date_str]['entries']
@@ -108,21 +111,3 @@ def get_forecast_weather(city= None, lat = None, lon = None):
     except requests.RequestException as e:
         print(f"Error fetching forecast weather: {e}")
         return None, 'error', None
-
-
-def get_coords_by_name(city):
-    url = f'http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={API_KEY}'
-    try:
-        res = requests.get(url)
-        data = res.json()
-        if len(data) == 0:
-            return None
-        return {
-            'lat': data[0]['lat'],
-            'lon': data[0]['lon'],
-            'name': data[0]['name'],
-            'country': data[0]['country']
-        }
-    except Exception as e:
-        print(f"Error fetching coordinates: {e}")
-        return None

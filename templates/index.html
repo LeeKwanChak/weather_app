@@ -17,7 +17,6 @@
     </video>
 
 
-
     <div class="container">
         <!-- Header row with title and form -->
         <div class="header-row">
@@ -70,11 +69,14 @@
                 {% elif weather.weather_main == "Rain" %}
                     <img src="{{ url_for('static', filename='weather-icon/rainy.svg') }}" alt="Rain" class="weather-img">
                 {% elif weather.weather_main == "Drizzle" %}
-                    <img src="{{ url_for('static', filename='weather-icon/drizzle.svg') }}" alt="Drizzle" class="weather-img">
+                    <img src="{{ url_for('static', filename='weather-icon/rain.svg') }}" alt="Drizzle" class="weather-img">
                 {% elif weather.weather_main == "Snow" %}
                     <img src="{{ url_for('static', filename='weather-icon/snow.svg') }}" alt="Snow" class="weather-img">
                 {% elif weather.weather_main == "Thunderstorm" %}
                     <img src="{{ url_for('static', filename='weather-icon/thunderstorm.svg') }}" alt="Thunderstorm" class="weather-img">
+
+                {% elif weather.weather_main == "Mist" %}
+                    <img src="{{ url_for('static', filename='weather-icon/mist.svg') }}" alt="Mist" class="weather-img">
                 {% else %}
                     <img src="{{ url_for('static', filename='weather-icon/clear.svg') }}" alt="Default" class="weather-img">
                 {% endif %}
@@ -105,6 +107,8 @@
                     <script>
                         const forecastData = {{ next_12_forecasts | tojson }};
                     </script>
+
+                    
                     <canvas id="forecastChart" class="forecast-chart"> </canvas>
 
 
