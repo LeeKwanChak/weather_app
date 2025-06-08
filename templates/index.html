@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/style.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body data-current-weather="{{ weather.weather_main if weather else 'Default' }}"
-    data-is-daytime="{{ 'true' if weather.is_daytime else 'false' }}">
+                data-is-daytime="{{ 'true' if weather.is_daytime else 'false' }}">
     
     <video autoplay muted loop playsinline id="background-video">
         <source id="video-source" src="{{ url_for('static', filename='videos/clear.mp4') }}" type="video/mp4">
@@ -18,13 +18,12 @@
 
 
     <div class="container">
-        <!-- Header row with title and form -->
         <div class="header-row">
             <h1 class="app-title">Weather App</h1>
             <div class="search-wrapper">
                 <form method="POST" class="search-form">
                     <div class = "input-wrapper">
-                        <input type="text" name="city" class="location-input" placeholder="Enter location (e.g., London)" {% if city %} value="{{ city }}" {% endif %}>
+                        <input type="text" name="location_input" class="location-input" placeholder="Enter location (e.g., London)" {% if location %} value="{{ city }}" {% endif %}>
                         <button type="submit" class="search-button">
                             <span class="material-symbols-outlined">search</span>
                         </button>
@@ -46,7 +45,7 @@
                     <div class="location-date-wrapper">
                         <div class="location">
                             <span class="material-symbols-outlined">location_on</span>
-                            <span class="location-name">{{ weather.city }}</span>
+                            <span class="location-name">{{ weather.location }}</span>
                         </div>
                         <span class="date">{{ weather.local_date_formatted }}</span>
                         
@@ -152,7 +151,7 @@
 
         
     </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
 

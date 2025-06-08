@@ -17,6 +17,7 @@ body {
     overflow: auto; 
 }
 
+/* every weather information show inside the container */
 .container {
     max-width: 700px;
     margin: 0 auto; 
@@ -37,14 +38,14 @@ body {
     margin-bottom: 10px; 
 }
 
-/* Title styling */
+
 .app-title {
     font-size: 24px;
     margin: 0; 
     flex: 0 0 auto; 
 }
 
-/* Search wrapper styling */
+
 .search-wrapper {
     flex: 1; 
     display: flex;
@@ -58,6 +59,7 @@ body {
     width: 100%;
 }
 
+/* input bar */
 .location-input{
     width: 100%;
     padding: 10px 40px 10px 16px;;
@@ -70,8 +72,7 @@ body {
     color: white;
 }
 
-
-
+/* search button merge with the input bar*/
 .search-button{
     position: absolute;
     right: 10px;
@@ -84,6 +85,7 @@ body {
     height: 100%;
 }
 
+/* reaction if user hovers their mouse on search button */
 .search-button:hover{
     color: #ffd700; 
     transform: scale(1.1);
@@ -94,12 +96,12 @@ body {
     display: flex;
 }
 
+/* reaction if user hovers their mouse on location detection button */
 .location-detection-button:hover{
     transform: scale(1.1);
     transition: 0.2s ease;
     cursor: pointer;
 }
-
 
 
 .weather-img {
@@ -115,6 +117,7 @@ body {
     object-fit: contain;
 }
 
+/* make location in the left and date in the right */
 .location-date-wrapper {
     display: flex;
     justify-content: space-between;
@@ -246,21 +249,6 @@ body {
 
 .forecast-card .card-body p {
     margin: 10px 0;
-}
-
-/* Error message styling */
-.alert-danger {
-    background-color: rgba(255, 0, 0, 0.2);
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-/* Title and heading styling */
-h2.mt-4 {
-    font-size: 24px;
-    margin-top: 40px;
 }
 
 @keyframes fadeInUp {
