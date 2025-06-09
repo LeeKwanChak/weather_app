@@ -25,7 +25,7 @@ def index():
                 three_hourly_data = None
                 error = f"Could not search weather data for {location}. Please check the loaction name."
             else:
-                forecast_data, state_f, three_hourly_data = get_forecast_weather(location) # else correct location name, program storing the data
+                forecast_data, three_hourly_data = get_forecast_weather(location) # else correct location name, program storing the data
 
 
         # else if user use the location dection button
@@ -33,7 +33,7 @@ def index():
             lat = request.form['lat']
             lon = request.form['lon']
             weather_data, state_c = get_current_weather(lat=lat, lon=lon) # search location using latitude and longitude
-            forecast_data, state_f, three_hourly_data = get_forecast_weather(lat=lat, lon=lon)
+            forecast_data,  three_hourly_data = get_forecast_weather(lat=lat, lon=lon)
             weather_data['location'] = request.form['location']
 
     

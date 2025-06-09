@@ -62,10 +62,6 @@ def get_forecast_weather(location = None, lat = None, lon = None):
 
         print('before' , str(forecast_data))
 
-        if state != 200:
-            print(f"API Error (forecast): {forecast_data.get('message', 'Unknown error')}")
-            return None, state
-
         forecast_list = []
         daily_data = {}
         three_hourly_data = []
@@ -117,7 +113,7 @@ def get_forecast_weather(location = None, lat = None, lon = None):
             })
 
 
-        return forecast_list, state, three_hourly_data # return data to app.py
+        return forecast_list, three_hourly_data # return data to app.py
     except requests.RequestException as e:
         print(f"Error fetching forecast weather: {e}")
         return None, 'error', None
