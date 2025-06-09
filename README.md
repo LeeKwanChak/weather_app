@@ -1,6 +1,6 @@
 # Full Stack Weather App
 
-![Weather App Screenshot](screenshot.png)
+![Weather App Screenshot](screenshot.PNG)
 
 Welcome to my first programming side project — a full-stack Weather App built with Python and Flask.  
 This web application displays the current weather and the upcoming weather forecast for any location using the OpenWeatherMap API. 
