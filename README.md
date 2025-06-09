@@ -58,8 +58,8 @@ pip install -r requirements.txt
 - Copy your API key.
 
 5. Set up the Environment Variable
-Create a .env file in the root directory and add your API keys:
-API_KEY = your_api_key_here
+- Create a .env file in the root directory and add your API keys:
+- API_KEY = your_api_key_here
 
 6. Run the Application
 ```bash
