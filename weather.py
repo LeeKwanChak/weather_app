@@ -2,6 +2,8 @@ import requests
 from dotenv import load_dotenv
 import os
 from datetime import datetime
+
+load_dotenv()
 API_KEY = os.getenv('API_KEY')
 
 def get_current_weather(location= None, lat = None, lon = None):
@@ -28,7 +30,6 @@ def get_current_weather(location= None, lat = None, lon = None):
             'location' : current_data['name'],
             'temperature' : round(current_data['main']['temp'],1),
             'weather_main' : current_data['weather'][0]['main'],
-            'description': current_data['weather'][0]['description'].capitalize(),
             'humidity': current_data['main']['humidity'],
             'wind_speed': round(current_data['wind']['speed']*3.6),
             'timezone': current_data['timezone'],
@@ -79,8 +80,8 @@ def get_forecast_weather(location = None, lat = None, lon = None):
             date_str = entry_date.strftime('%Y-%m-%d')
             if date_str not in daily_data:
                 daily_data[date_str] = {'temps': [], 'weather_inform': []}
-            daily_data[date_str]['temps'].append(data['main']['temp'])
-            daily_data[date_str]['weather_inform'].append({'time': entry_time, 'weather_main': data['weather'][0]['main']})
+            daily_data[date_str]['temps'].append(data['main']['temp'],) # use for finding the max and min weather of a forecast day
+            daily_data[date_str]['weather_inform'].append({'time': entry_time, 'weather_main': data['weather'][0]['main']}) # other forecast weather information
             
 
             # Add three hourly forecast data into three_hourly_data

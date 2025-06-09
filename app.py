@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 from weather import get_current_weather, get_forecast_weather, get_upcoming_forecast
-from datetime import datetime
 app = Flask(__name__)
 
 

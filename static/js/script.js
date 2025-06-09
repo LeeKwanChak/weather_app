@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gradient.addColorStop(1, 'rgba(120, 180, 255, 0.05)');
 
     const iconMap = {
-      'clear': '/static/weather-icon/clear.svg',
+      'clear': '/static/weather-icon/day.svg',
       'clear-night': '/static/weather-icon/night.svg',
       'clouds': '/static/weather-icon/cloudy-day-1.svg',
       'cloudy-night': '/static/weather-icon/cloudy-night-1.svg',
