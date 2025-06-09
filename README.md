@@ -11,13 +11,11 @@ It includes a clean and responsive interface with the following key features:
 - An interactive line chart showing 3-hour interval temperature forecasts with weather icons
 - Weather icons that change based on weather conditions and whether it's day or night
 
----
 
 ## Live Demo
 
 Check out the live app here: [Full Stack Weather App](https://leekc330.pythonanywhere.com/)
 
----
 
 ## Technologies Used
 
@@ -32,7 +30,6 @@ This project was built using the following technologies:
 - OpenStreetMap Nominatim
 - Geolocation API
 
----
 
 ## Setup & Installation
 
@@ -72,7 +69,6 @@ python app.py
 7. Visit in Your Browser
 - Open http://127.0.0.1:5000 to view the app.
 
----
 
 ## License 
 
