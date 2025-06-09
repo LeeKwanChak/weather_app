@@ -81,21 +81,6 @@
                 {% endif %}
             </div>
 
-                    
-
-                    {% if forecast and forecast | length > 0%}
-                        <p><strong>
-                            <span class="material-symbols-outlined">
-                            arrow_downward
-                            </span>
-                            {{forecast[0].min_temp}}°C |
-                            <span class="material-symbols-outlined">
-                            arrow_upward
-                            </span>
-                            {{forecast[0].max_temp}}°C
-                        </strong></p>
-                    {%endif %}
-
 
                     <p><strong>Temperature:</strong>    {{ weather.temperature }}°C</p>
                     <p><strong>Humidity:</strong>   {{ weather.humidity }}%</p>
