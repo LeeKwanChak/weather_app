@@ -35,7 +35,7 @@ This project was built using the following technologies:
 
 1. Clone the Repository
 ```bash
-git clone https://github.com/LEE-Kwan-Chak/Full-Stack-Weather-App.git
+git clone https://github.com/LeeKwanChak/Full-Stack-Weather-App.git
 cd Weather App
 ```
 
