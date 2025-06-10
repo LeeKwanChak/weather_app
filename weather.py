@@ -58,9 +58,6 @@ def get_forecast_weather(location = None, lat = None, lon = None):
     try:
         forecast_response = requests.get(forecast_url)
         forecast_data = forecast_response.json()
-        state = int(forecast_data['cod'])
-
-        print('before' , str(forecast_data))
 
         forecast_list = []
         daily_data = {}
@@ -146,7 +143,5 @@ def get_upcoming_forecast(data, current_weather):
             upcoming_weather.append(entry_with_daytime)
         if len(upcoming_weather) == 6: # get 6 data point for the chart, it can be any number
             break
-        
-    print('after extract only 6'+ str(upcoming_weather))
-    print(upcoming_weather)
+
     return upcoming_weather # return data to app.py
