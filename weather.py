@@ -22,8 +22,8 @@ def get_current_weather(location= None, lat = None, lon = None):
         if state != 200: # if it is not a correct location name
             return None, state
         
-        timezone_offset_seconds = current_data['timezone']
-        last_update = datetime.utcfromtimestamp(current_data['dt'] + timezone_offset_seconds).strftime('%H:%M')
+        timezone_offset = current_data['timezone']
+        last_update = datetime.utcfromtimestamp(current_data['dt'] + timezone_offset).strftime('%H:%M')
 
         # storing the current data
         current_weather = {
