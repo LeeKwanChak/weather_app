@@ -23,7 +23,6 @@ This project was built using the following technologies:
 - Python
 - Flask
 - HTML5 & CSS3
-- Jinja2
 - JavaScript
 - OpenWeatherMap API
 - OpenStreetMap Nominatim
@@ -53,12 +52,12 @@ pip install -r requirements.txt
 ```
 
 4. Get API key from OpenWeatherMap
-- Sign up at https://openweathermap.org/api
-- Copy your API key.
+    * Sign up at https://openweathermap.org/api
+    * Copy your API key.
 
 5. Set up the Environment Variable
-- Create a .env file in the root directory and add your API keys:
-- API_KEY = your_api_key_here
+    * Create a .env file in the root directory and add your API keys:
+    * API_KEY = your_api_key_here
 
 6. Run the Application
 ```bash
@@ -66,7 +65,7 @@ python app.py
 ```
 
 7. Visit in Your Browser
-- Open http://127.0.0.1:5000 to view the app.
+    * Open http://127.0.0.1:5000 to view the app.
 
 
 ## License 
