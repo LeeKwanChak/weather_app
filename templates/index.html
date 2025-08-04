@@ -23,7 +23,7 @@
             <div class="search-wrapper">
                 <form method="POST" class="search-form">
                     <div class = "input-wrapper">
-                        <input type="text" name="location_input" class="location-input" placeholder="Enter location(e.g. London)" {% if location %} value="{{ city }}" {% endif %}>
+                        <input type="text" name="location_input" class="location-input" placeholder="Enter location: " {% if location %} value="{{ city }}" {% endif %}>
                         <button type="submit" class="search-button">
                             <span class="material-symbols-outlined">search</span>
                         </button>

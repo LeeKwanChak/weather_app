@@ -1,6 +1,6 @@
 # Full Stack Weather App
 
-![Weather App Screenshot](screenshot.PNG)
+![Weather App Screenshot](screenshot.gif)
 
 This web application displays the current weather and the upcoming weather forecast for any location using the OpenWeatherMap API. 
 It includes a clean and responsive interface with the following key features:
