@@ -11,8 +11,6 @@ const weatherVideos = {
 };
 
 
-const video = document.getElementById('background-video');
-const source = document.getElementById('video-source');
 const currentWeather = document.body.getAttribute('data-current-weather');
 const isDaytime = document.body.getAttribute('data-is-daytime') === 'true';
 
