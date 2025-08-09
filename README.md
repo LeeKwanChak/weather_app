@@ -1,4 +1,4 @@
-# Full Stack Weather App
+# Weather app
 
 ![Weather App Screenshot](screenshot.gif)
 
